@@ -2,6 +2,7 @@
 	<head>
 		<title>Главная: Мой полет</title>
 		<meta charset = "utf-8"/>
+		<link rel="stylesheet" href="/views/styles/home_layout_style.css"/>
 	</head>
 	<body>
 		<?php 

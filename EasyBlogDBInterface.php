@@ -16,8 +16,8 @@
 			return ; 
 		}
 
-		$resultset = $mysqli->query('SELECT * FROM Post ORDER BY postdate LIMIT 5');
-		
+		$resultset = $mysqli->query('SELECT * FROM Post ORDER BY postdate DESC LIMIT 5');
+
 		while ($row = $resultset->fetch_assoc()) 
     	{
     		array_push($resultarray, $row);

@@ -1,7 +1,5 @@
 <?php
 	require 'vendor/autoload.php';
-	
-	Flight::set('flight.views.path','/home/doctor_lapt/Sites/MyFlight/views');
 
 	//главная страница
 	Flight::route('/(\?p=@p)', function($p)
