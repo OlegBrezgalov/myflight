@@ -11,6 +11,7 @@
 
 		echo $home_page_content;
 		echo $posts_block;
+		echo $pages_n_links;
 		?>
 	</body>
 </html>

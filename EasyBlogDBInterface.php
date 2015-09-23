@@ -4,6 +4,22 @@
 	$dbAdminLog = 'root';
 	$dbAdminPas = 'root';
 	
+	function CountPosts()
+	{
+		global $dbHost, $dbName, $dbAdminLog, $dbAdminPas;
+
+		$mysqli = @new mysqli('localhost','root','root','EasyBlog');
+		if (mysqli_connect_errno())
+		{
+			echo "!!!".mysqli_connect_error();
+			return ; 
+		}
+
+		$resultset = $mysqli->query('SELECT COUNT(*) FROM Post;');
+		$resultint = $resultset->fetch_assoc();
+		return (integer)$resultint['COUNT(*)'];
+	}
+
 	function GetFiveForPage($startpage_number)
 	{
 		global $dbHost, $dbName, $dbAdminLog, $dbAdminPas;
