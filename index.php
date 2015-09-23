@@ -1,12 +1,11 @@
-<html>
-	<head>
-		<title>Мой полет</title>
-		<meta charset = "utf-8"/> 
-	</head>
-	<body>
-	<?php
-	include 'requirements.php';
- 	?>
- 	</body>
+<?php
+	require 'vendor/autoload.php';
+	//главная страница
+	Flight::route('/(\?page=@page)', function($page){
+		$c_page = 1;
+		if (!is_null($page))$c_page = $page;
+		echo $c_page;
+	});
 
- </html>
+	Flight::start();
+?>
