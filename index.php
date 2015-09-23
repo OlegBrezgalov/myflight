@@ -13,9 +13,6 @@
 		$postselector = ($page-1)*5;
 		$posts = GetFiveForPage($postselector);
 
-		for ($x=0; $x<5; $x++)
-			echo 'x';
-
 		Flight::render('home.php',
 						array(
 							'headertext' => 'Мой летучий блог',

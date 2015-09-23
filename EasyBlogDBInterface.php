@@ -6,9 +6,6 @@
 	
 	function GetFiveForPage($startpage_number)
 	{
-		$startpage_number = $startpage_number - 1; 
-		$lastpage_number= $startpage_number + 4;
-
 		global $dbHost, $dbName, $dbAdminLog, $dbAdminPas;
 		$resultarray = [];
 
@@ -21,7 +18,7 @@
 
 		$resultset = $mysqli->query
 			('SELECT * FROM Post ORDER BY postdate DESC 
-				LIMIT '.$startpage_number.', '.$lastpage_number);	
+				LIMIT '.$startpage_number.', '.'5');	
 
 		while ($row = $resultset->fetch_assoc()) 
     	{
