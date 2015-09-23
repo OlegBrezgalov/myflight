@@ -6,10 +6,15 @@
 	{
 		//gettin page index
 		$page = 1;
-		if (!is_null($p))$page = $p;
+		if ($p > 1)
+			$page = $p;
 
 		include 'EasyBlogDBInterface.php';
-		$posts = GetTopFive();
+		$postselector = ($page-1)*5;
+		$posts = GetFiveForPage($postselector);
+
+		for ($x=0; $x<5; $x++)
+			echo 'x';
 
 		Flight::render('home.php',
 						array(

@@ -8,12 +8,7 @@
 			</div>
 			<div class = "postsignature">
 				<p>
-				<div id = "date"> 
-					<?php echo $post['postdate']; ?>
-				</div>
-				<div id = "author">
-					<?php echo $post['authorlogin']; ?>
-				</div>
+					<?php echo $post['postdate']; ?>&nbsp;<?php echo $post['authorlogin']; ?> 
 				</p>
 			</div>
 		</div>
