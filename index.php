@@ -13,8 +13,8 @@
 		$postselector = ($page-1)*5;
 		$posts = GetFiveForPage($postselector);
 
-		$postscount = CountPosts();
-		$page_count = (integer)round($postscount / 5);
+		$postscount = 200;//CountPosts();
+		$pages_count = (integer)round($postscount / 5);
 
 		Flight::render('home.php',
 						array(
@@ -27,7 +27,10 @@
 						array('posts' => $posts),
 						'posts_block');
 		Flight::render('page_hyperlinks.php',
-						array('page_count' => $page_count),
+						array(
+							'pages_count' => $pages_count,
+							'current_page' => $page
+							),
 						'pages_n_links');
 		Flight::render('home_layout.php', NULL);
 	});
