@@ -5,9 +5,20 @@
 		echo '<a href = "/?p=',$index,'/"">',$leftchar,$index,$rightchar,'</a> ';	
 	}
 
-	$maxinline = 3;
+	function print_page_line($leftind, $rightind, $current)
+	{
+		for ($i=$leftind; $i <= $rightind; $i++)
+		{
+			if ($i == $current)
+				print_page_ref('[',$i,']'); 
+			else 
+				print_page_ref('',$i,'');
+			echo ' ';
+		}
+	}
 
 	if ($pages_count<=4) 
+	{
 		for ($i = 0; $i < $pages_count; $i++)	
 		{
 			if ($i == $current_page-1)
@@ -15,36 +26,34 @@
 			else
 				print_page_ref('',$i+1,''); 
 		}
+	}
 	else
-		switch ($current_page) 
+	{
+		if ($current_page > 0 && $current_page <= $pages_count)
 		{
-			case 1:
-				print_page_ref('[',1,']');
-				for ($i = 1; $i < $maxinline; $i++)	
-					print_page_ref('',$i+2,'');
-				echo '... '; print_page_ref('',$pages_count,'');
-				break;
-			
-			case $pages_count:
-				print_page_ref('',1,''); echo ' ... ';
-				for ($i = $pages_count-1; $i > $pages_count-$maxinline; $i--)	
-					print_page_ref('',$i,'');
-				print_page_ref('[',$pages_count,']');
-				break;
+			if ($current_page <=2)
+			{
+				print_page_line(1,3,$current_page);
+				echo '... ';
+				print_page_ref('',$pages_count,'');
+			}
 
-			default:
-				if ($current_page <= 0)
-				{
-					echo 'error: negative page index';
-					break;
-				}
+			else if ($current_page >= $pages_count-1)
+			{
+				print_page_ref('',1,'');	
+				echo ' ... ';
+				print_page_line($pages_count-2,$pages_count,$current_page);
+			}
 
-				print_page_ref('',1,''); echo ' ... ';
-				print_page_ref('',$current_page-1,'');
-				print_page_ref('[',$current_page,']');
-				print_page_ref('',$current_page+1,'');
-				echo ' ... '; print_page_ref('',$pages_count,'');
-				break;
+			else
+			{
+				print_page_ref('',1,'');
+				echo ' ... ';
+				print_page_line($current_page-1, $current_page+1, $current_page);
+				echo '... ';
+				print_page_ref('',$pages_count,'');
+			}
 		}
+	}
 
 ?>
