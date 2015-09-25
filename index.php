@@ -10,11 +10,18 @@
 			$page = $p;
 
 		include 'EasyBlogDBInterface.php';
+		MyDBInterface::Connect();
 		$postselector = ($page-1)*5;
-		$posts = GetFiveForPage($postselector);
+		$posts = MyDBInterface::GetPosts($postselector,5);
 
-		$postscount = 200;//CountPosts();
+		$postscount = 200;//MyDBInterface::CountPosts();
 		$pages_count = (integer)round($postscount / 5);
+
+		//
+		
+		MyDBInterface::Disconnect();
+		//
+
 
 		Flight::render('home.php',
 						array(

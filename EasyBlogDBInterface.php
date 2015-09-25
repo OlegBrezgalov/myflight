@@ -1,73 +1,49 @@
 <?php
-	$dbHost 	= 'localhost';
-	$dbName 	= 'EasyBlog';
-	$dbAdminLog = 'root';
-	$dbAdminPas = 'root';
-	
-	function CountPosts()
-	{
-		global $dbHost, $dbName, $dbAdminLog, $dbAdminPas;
 
-		$mysqli = @new mysqli('localhost','root','root','EasyBlog');
-		if (mysqli_connect_errno())
+	class MyDBInterface
+	{
+		private static $_dbHost 	= 'localhost';
+		private static $_dbName 	= 'EasyBlog';
+		private static $_dbAdminLog = 'root';
+		private static $_dbAdminPas = 'root';
+
+		private static $_mysqli = null;
+
+		public static function Connect()
 		{
-			echo "!!!".mysqli_connect_error();
-			return ; 
+			self::$_mysqli = new mysqli('localhost','root','root','EasyBlog');
+			if (mysqli_connect_errno())
+			{	
+				throw new Exception("!!!".mysqli_connect_error());
+			}
 		}
 
-		$resultset = $mysqli->query('SELECT COUNT(*) FROM Post;');
-		$resultint = $resultset->fetch_assoc();
-		return (integer)$resultint['COUNT(*)'];
-	}
-
-	function GetFiveForPage($startpage_number)
-	{
-		global $dbHost, $dbName, $dbAdminLog, $dbAdminPas;
-		$resultarray = [];
-
-		$mysqli = @new mysqli('localhost','root','root','EasyBlog');
-		if (mysqli_connect_errno())
+		public static function CountPosts()
 		{
-			echo "!!!".mysqli_connect_error();
-			return ; 
+			$resultset = self::$_mysqli->query('SELECT COUNT(*) FROM Post;');
+			$resultint = $resultset->fetch_assoc();
+			return (integer)$resultint['COUNT(*)'];
 		}
 
-		$resultset = $mysqli->query
+		public static function GetPosts($pageindex, $postsperpage)
+		{
+			$resultarray = [];
+			$resultset = self::$_mysqli->query
 			('SELECT * FROM Post ORDER BY postdate DESC 
-				LIMIT '.$startpage_number.', '.'5');	
+				LIMIT '.$pageindex.', '.$postsperpage);	
 
-		while ($row = $resultset->fetch_assoc()) 
-    	{
-    		array_push($resultarray, $row);
-    	}
+			while ($row = $resultset->fetch_assoc()) 
+    		{
+    			array_push($resultarray, $row);
+    		}
 
-		$resultset->close();
-		$mysqli->close();
-		return $resultarray;
-	}
-
-	function GetTopFive()
-	{
-		global $dbHost, $dbName, $dbAdminLog, $dbAdminPas;
-		$resultarray = [];
-
-		$mysqli = @new mysqli('localhost','root','root','EasyBlog');
-		if (mysqli_connect_errno())
-		{
-			echo "!!!".mysqli_connect_error();
-			return ; 
+			$resultset->close();
+			return $resultarray;
 		}
 
-		$resultset = $mysqli->query('SELECT * FROM Post ORDER BY postdate DESC LIMIT 5');
-
-		while ($row = $resultset->fetch_assoc()) 
-    	{
-    		array_push($resultarray, $row);
-    	}
-
-		$resultset->close();
-		$mysqli->close();
-		return $resultarray;
+		public static function Disconnect()
+		{
+			self::$_mysqli->close();
+		}
 	}
-
 ?>
