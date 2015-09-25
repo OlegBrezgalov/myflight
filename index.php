@@ -10,18 +10,14 @@
 			$page = $p;
 
 		include 'EasyBlogDBInterface.php';
-		MyDBInterface::Connect();
+		Flight::register('db','MyDBInterface',array('localhost','EasyBlog','root','root'));
+		$mydb = Flight::db();
+
 		$postselector = ($page-1)*5;
-		$posts = MyDBInterface::GetPosts($postselector,5);
+		$posts = $mydb::GetPosts($postselector,5);
 
-		$postscount = 200;//MyDBInterface::CountPosts();
-		$pages_count = (integer)round($postscount / 5);
-
-		//
-		
-		MyDBInterface::Disconnect();
-		//
-
+		$postscount = $mydb::CountPosts();
+		$pages_count = ceil($postscount / 5);
 
 		Flight::render('home.php',
 						array(

@@ -9,9 +9,21 @@
 
 		private static $_mysqli = null;
 
+		public function __construct($dbhost, $dbname, $dbuser, $dbpass)
+		{
+			$this->_dbHost = $dbhost;
+			$this->_dbName = $dbname;
+			$this->_dbAdminLog = $dbuser;
+			$this->_dbAdminPas = $dbpass;
+			self::Connect();
+		}
+		
 		public static function Connect()
 		{
-			self::$_mysqli = new mysqli('localhost','root','root','EasyBlog');
+			self::$_mysqli = new mysqli
+				(self::$_dbHost,self::$_dbAdminLog,
+					self::$_dbAdminPas,self::$_dbName);
+
 			if (mysqli_connect_errno())
 			{	
 				throw new Exception("!!!".mysqli_connect_error());
@@ -44,6 +56,11 @@
 		public static function Disconnect()
 		{
 			self::$_mysqli->close();
+		}
+
+		public function __destruct()
+		{
+			self::Disconnect();
 		}
 	}
 ?>
