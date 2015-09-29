@@ -1,7 +1,7 @@
 <?php
 	function generate_href($leftsep,$name,$rightsep)
 	{
-		$str = '<a href = "/?p='.$name.'/">'.$leftsep.$name.$rightsep.'</a>';
+		$str = $leftsep.'<a href = "/?p='.$name.'/">'.$name.'</a>'.$rightsep;
 		return $str;
 	}
 
@@ -39,7 +39,7 @@
 		// 1 2 3 4 
 		if ($length <= $width+1)
 		{
-			$resultstr = generate_pagination_line(1,$length,$current).'0000';
+			$resultstr = generate_pagination_line(1,$length,$current);
 		}
 		//1 [2] 3 ... 40
 		else if ($current <= 1 + ($width-1)/2)

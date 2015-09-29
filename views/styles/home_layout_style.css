@@ -4,6 +4,20 @@ body
     text-align: center;
 }
 
+.signin
+{
+	position: absolute;
+	top: 20px;
+	left: 850px;
+}
+
+.logout
+{
+	position: absolute;
+	top: 20px;
+	left: 15px;
+}
+
 .header
 {
 	padding-top: 1px;

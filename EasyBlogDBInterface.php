@@ -18,16 +18,33 @@
 			self::Connect();
 		}
 		
+		private static function ConExTest()
+		{
+			if (mysqli_connect_errno())
+			{	
+				throw new Exception("!!!".mysqli_connect_error());
+			}
+		}
+
 		public static function Connect()
 		{
 			self::$_mysqli = new mysqli
 				(self::$_dbHost,self::$_dbAdminLog,
 					self::$_dbAdminPas,self::$_dbName);
+			self::ConExTest();
+			
+		}
 
-			if (mysqli_connect_errno())
-			{	
-				throw new Exception("!!!".mysqli_connect_error());
-			}
+		public static function Authorise($login, $password)
+		{
+			self::ConExTest();
+			$req = 'SELECT COUNT(*) FROM User WHERE User.login="'.$login.'" AND User.password="'.$password.'"';
+			$resultset = self::$_mysqli->query($req);
+			$res = $resultset->fetch_assoc();
+			if ($res['COUNT(*)'] == 0) 	
+				return false;
+			else 
+				return true;
 		}
 
 		public static function CountPosts()
